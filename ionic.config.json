@@ -1,0 +1,8 @@
+{
+  "name": "trading-dashboard",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular",
+  "id": "19fabdc1"
+}
