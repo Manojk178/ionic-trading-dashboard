@@ -5,6 +5,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { HomePage } from './home.page';
 import { HomePageRoutingModule } from './home-routing.module';
+import { GoogleNavModule } from '../google-nav/google-nav.module';
+import { ConfirmModalPageModule } from '../modals/confirm-modal/confirm-modal.module';
 
 @NgModule({
   imports: [
@@ -12,7 +14,9 @@ import { HomePageRoutingModule } from './home-routing.module';
     FormsModule,
     IonicModule,
     HomePageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    GoogleNavModule,
+    ConfirmModalPageModule
   ],
   declarations: [HomePage],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]

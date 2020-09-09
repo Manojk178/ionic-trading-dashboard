@@ -1,57 +1,126 @@
-<form [formGroup]="todo" (ngSubmit)="logForm()">
-  <ion-item>
-    <ion-label>
-      Track
-    </ion-label>
-    <ion-select>
-      <ion-select-option>Track1</ion-select-option>
-      <ion-select-option>Track2</ion-select-option>
-    </ion-select>
-  </ion-item>
-  <ion-item>
-    <ion-icon name="star" slot="start"></ion-icon>
-    <ion-label>
-      Inbound
-    </ion-label>
-    <ion-select>
-      <ion-select-option>Inbound1</ion-select-option>
-      <ion-select-option>Inbound2</ion-select-option>
-    </ion-select>
-  </ion-item>
-  <ion-item>
-    <ion-icon name="star" slot="start"></ion-icon>
-    <ion-label>
-      Inspection Type
-    </ion-label>
-    <ion-select>
-      <ion-select-option>Type1</ion-select-option>
-      <ion-select-option>Type2</ion-select-option>
-    </ion-select>
-  </ion-item>
-  <ion-item>
-    <ion-label>Arrival Train ID</ion-label>
-    <ion-input type="text" formControlName="title"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Mech Received Date/Time</ion-label>
-    <ion-input type="text" formControlName="title"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-label>Inspection Begin Date/Time</ion-label>
-    <ion-input type="text" formControlName="title"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-icon name="star" slot="start"></ion-icon>
-    <ion-label>Comments</ion-label>
-    <ion-textarea formControlName="comments"></ion-textarea>
-  </ion-item>
-  <ion-item>
-    <ion-label>
-      Open for edit
-    </ion-label>
-    <ion-checkbox class="checkbox-square" ng-model="isCheckedCommercial">value 1</ion-checkbox>
-  </ion-item>
+<ion-header *ngIf="!displayDetails">
+    <ion-toolbar>
+        <ion-title class="ion-text-center">
+            Validation Form
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<!--<ion-content *ngIf="displayDetails">
+    <app-google-nav [location]="submitForm.value.address">
+
+    </app-google-nav>
+</ion-content> -->
+
+
+<ion-content *ngIf="!displayDetails">
+<form [formGroup]="submitForm" (ngSubmit)="logForm()" novalidate>
+    <ion-item>
+        <ion-label>
+            Track
+        </ion-label>
+        <ion-select color="primary" placeholder="Please Select" formControlName="track">
+            <ion-select-option value="t1">Track1</ion-select-option>
+            <ion-select-option value="t2">Track2</ion-select-option>
+        </ion-select>
+    </ion-item>
+    <ion-item>
+        <ion-label>
+            Inbound
+        </ion-label>
+        <ion-select color="primary" placeholder="Please Select" formControlName="inbound">
+            <ion-select-option value="11th">Inbound1</ion-select-option>
+            <ion-select-option value="12th">Inbound2</ion-select-option>
+        </ion-select>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.inbound.errors?.required">
+        Inbound is required.
+    </span>
+    <ion-item>
+        <ion-label>
+            *Inspection Type
+        </ion-label>
+        <ion-select color="primary" placeholder="Please Select" formControlName="inspecType">
+            <ion-select-option value="it1">Type1</ion-select-option>
+            <ion-select-option value="it2">Type2</ion-select-option>
+        </ion-select>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.inspecType.errors?.required">
+        Inspection Type is required.
+    </span>
+    <ion-item>
+        <ion-label>*Arrival Train ID</ion-label>
+        <ion-input  color="primary" placeholder ="Please Enter Here" type="number" formControlName="arrivalID"></ion-input>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.arrivalID.errors?.required">
+        Arrival Train ID is required.
+    </span>
+    <ion-item>
+        <ion-label>Mech Received Date/Time</ion-label>
+        <ion-input color="primary" placeholder ="Please Enter Here" type="text" formControlName="mechReceived"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Inspection Begin Date/Time</ion-label>
+        <ion-input color="primary" placeholder ="Please Enter Here" type="text" formControlName="inspectionBegin"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label>Address</ion-label>
+        <ion-textarea color="primary" placeholder ="Please Enter Here" formControlName="address"></ion-textarea>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.address.errors?.required">
+        Address fields are required.
+    </span>
+    <ion-item>
+        <ion-label>*Comments</ion-label>
+        <ion-textarea color="primary" placeholder ="Please Enter Here" formControlName="comments" autofocus="true"></ion-textarea>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="isSubmitted && errorControl.comments.errors?.required">
+        Address fields are required.
+    </span>
+    <ion-item>
+        <ion-label>
+            Open for edit
+        </ion-label>
+        <ion-checkbox class="checkbox-square" ng-model="isCheckedForEdit">value 1</ion-checkbox>
+    </ion-item>
+    <ion-button type="submit" shape="round" fill="outline" color="primary">Submit</ion-button>
 </form>
+</ion-content>
+
+<ion-header class="ion-no-border" *ngIf="displayDetails">
+    <ion-toolbar>
+        <ion-title class="ion-text-center">
+            Inspection ID: {{ this.dataReturned.arrivalID }}
+        </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="displayDetails">
+    <ion-item>
+        <ion-label>Inspection Type: {{ this.dataReturned.inspecType }}</ion-label>
+    </ion-item>
+    <ion-item>
+        <ion-label>Open Bad orders: 0</ion-label>
+    </ion-item>
+    <ion-item>
+        <ion-label>Order Created: 09/08/2020</ion-label>
+    </ion-item>
+    <ion-item>
+        <ion-label>Mechanical Received : 0</ion-label>
+    </ion-item>
+    <ion-item>
+        <ion-label>Inspection Begin:0</ion-label>
+    </ion-item>
+    <ion-item>
+        <ion-label>Mechanical Released: 0</ion-label>
+    </ion-item>
+    <ion-item>
+        <ion-label>Comments: {{ this.dataReturned.comments }}</ion-label>
+    </ion-item>
+</ion-content>
+
+
+
 
 
 

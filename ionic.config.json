@@ -1,7 +1,8 @@
 {
   "name": "trading-dashboard",
   "integrations": {
-    "capacitor": {}
+    "capacitor": {},
+    "cordova": {}
   },
   "type": "angular",
   "id": "19fabdc1"
